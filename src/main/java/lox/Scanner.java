@@ -80,9 +80,18 @@ public class Scanner {
                 break;
 
             default:
-                Lox.error(line, "Unexpected character.");
+
+                if (isDigit(c)){
+                    number(); break;
+                } else {
+                    Lox.error(line, "Unexpected character.");
+                }
                 break;
         }
+    }
+
+    private boolean isDigit(char c){
+        return c >= '0' && c <= '9';
     }
 
     private char advance(){
@@ -111,6 +120,11 @@ public class Scanner {
         return source.charAt(current);  // return the character at the current pointer
     }
 
+    private char peekNext(){
+        if (current + 1 >= source.length()) return '\0';
+        return source.charAt(current + 1);
+    }
+
     private void string(){
 
         // keep consuming characters until closing quote (check if we are at end every time)
@@ -128,5 +142,23 @@ public class Scanner {
 
         String value = source.substring(start+1, current-1);
         addToken(STRING, value);
+    }
+
+    private void number(){
+
+        while (isDigit(peek())) advance();
+
+        if (peek() == '.' && isDigit(peekNext())){
+
+            // consume '.'
+            advance();
+
+            while (isDigit(peek())) advance();
+
+        }
+
+        addToken(NUMBER,
+                Double.parseDouble(source.substring(start, current)));
+
     }
 }
