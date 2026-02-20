@@ -1,9 +1,11 @@
+import lox.Lox;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Main {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     // You can use print statements as follows for debugging, they'll be visible when running tests.
     System.err.println("Logs from your program will appear here!");
 
@@ -31,7 +33,7 @@ public class Main {
     // TODO: Uncomment the code below to pass the first stage
     // 
      if (fileContents.length() > 0) {
-       throw new RuntimeException("Scanner not implemented");
+       Lox.main(args);
      } else {
        System.out.println("EOF  null"); // Placeholder, replace this line when implementing the scanner
      }
