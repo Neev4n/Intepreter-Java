@@ -72,7 +72,7 @@ public class Scanner {
             case ' ':
             case '\r':
             case '\t':
-                // Ignore whitespace.
+                // ignore whitespace.
                 break;
 
             case '\n':
@@ -119,12 +119,12 @@ public class Scanner {
             advance();  // move to next character
         }
 
-        advance();
-
         if (isAtEnd()){
             Lox.error(line, "Unterminated string.");
             return;
         }
+
+        advance();
 
         String value = source.substring(start+1, current-1);
         addToken(STRING, value);
