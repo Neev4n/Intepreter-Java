@@ -115,7 +115,7 @@ public class Scanner {
 
         // keep consuming characters until closing quote (check if we are at end every time)
         while (peek() != '"' && !isAtEnd()){
-            if (peek() == '\n'); line++;    // if we encounter a newline then increment line
+            if (peek() == '\n') line++;    // if we encounter a newline then increment line
             advance();  // move to next character
         }
 
