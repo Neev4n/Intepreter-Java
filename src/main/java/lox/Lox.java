@@ -21,8 +21,7 @@ public class Lox {
 
         // if single argument then must be file path
         } else if (args.length == 1) {
-            returnExprTree(args[0]);
-            //runFile(args[0]);
+            runFile(args[0]);
 
         // if no arguments then interactive cli
         } else {
@@ -66,27 +65,6 @@ public class Lox {
 
         System.out.println(new AstPrinter().print(expression));
 
-    }
-
-    // both functions below are just for code crafter test cases
-    private static String returnExprTree(String path) throws IOException{
-        byte[] bytes = Files.readAllBytes(Paths.get(path));
-        String res = runStr(new String(bytes, Charset.defaultCharset()));
-        if (hadError) System.exit(65);
-        return res;
-    }
-
-    private static String runStr(String source){
-        Scanner scanner = new Scanner(source);
-        List<Token> tokens = scanner.scanTokens();
-
-        Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
-
-        // Stop if there was a syntax error.
-        if (hadError) return "";
-
-        return new AstPrinter().print(expression);
     }
 
     // let other systems report errors separately to the implementations of those systems
