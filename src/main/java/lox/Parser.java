@@ -127,6 +127,7 @@ public class Parser {
 
         for (TokenType type : types){
             if (check(type)){
+                advance();
                 return true;
             }
         }
