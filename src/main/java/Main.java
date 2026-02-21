@@ -1,41 +1,36 @@
-import lox.Lox;
+import lox.*;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+import static lox.Lox.runParse;
+import static lox.Lox.runTokenize;
 
 public class Main {
   public static void main(String[] args) throws IOException {
-    // You can use print statements as follows for debugging, they'll be visible when running tests.
-    System.err.println("Logs from your program will appear here!");
-
     if (args.length < 2) {
-      System.err.println("Usage: ./your_program.sh tokenize <filename>");
-      System.exit(1);
+      System.err.println("Usage: jlox <command> <script>");
+      System.exit(64);
     }
 
     String command = args[0];
-    String filename = args[1];
+    String path = args[1];
 
-    if (!command.equals("tokenize")) {
-      System.err.println("Unknown command: " + command);
-      System.exit(1);
+    byte[] bytes = Files.readAllBytes(Paths.get(path));
+    String source = new String(bytes, Charset.defaultCharset());
+
+    switch (command) {
+      case "tokenize" -> runTokenize(source);
+      case "parse" -> runParse(source);
+      default -> {
+        System.out.println("Unknown command: " + command);
+        System.exit(1);
+      }
     }
-
-    String fileContents = "";
-    try {
-      fileContents = Files.readString(Path.of(filename));
-    } catch (IOException e) {
-      System.err.println("Error reading file: " + e.getMessage());
-      System.exit(1);
-    }
-
-    // TODO: Uncomment the code below to pass the first stage
-    // 
-     if (fileContents.length() > 0) {
-       Lox.main(new String[] {filename});
-     } else {
-       System.out.println("EOF  null"); // Placeholder, replace this line when implementing the scanner
-     }
   }
+
 }

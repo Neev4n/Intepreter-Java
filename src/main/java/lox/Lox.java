@@ -67,6 +67,26 @@ public class Lox {
 
     }
 
+    public static void runParse(String source) {
+        Scanner scanner = new Scanner(source);
+        List<Token> tokens = scanner.scanTokens();
+
+        Parser parser = new Parser(tokens);
+        Expr expression = parser.parse();
+
+        if (hadError) System.exit(65);
+
+        System.out.println(new AstPrinter().print(expression));
+    }
+
+    public static void runTokenize(String source) {
+        Scanner scanner = new Scanner(source);
+        List<Token> tokens = scanner.scanTokens();
+        for (Token token : tokens) {
+            System.out.println(token.type + " " + token.lexeme + " " + token.literal);
+        }
+    }
+
     // let other systems report errors separately to the implementations of those systems
     static void error(int line, String message){
         report(line, "", message);
