@@ -83,12 +83,12 @@ public class Lox {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
 
-        // If scanning had an error, exit 65 (even if you printed some tokens).
-        if (hadError) System.exit(65);
-
         for (Token token : tokens) {
             System.out.println(token.type + " " + token.lexeme + " " + token.literal);
         }
+
+        // If scanning had an error, exit 65 (even if you printed some tokens).
+        if (hadError) System.exit(65);
     }
 
     // let other systems report errors separately to the implementations of those systems
