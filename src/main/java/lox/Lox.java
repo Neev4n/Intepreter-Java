@@ -57,16 +57,27 @@ public class Lox {
         Scanner scanner = new Scanner(source);  // create scanner from source string
         List<Token> tokens = scanner.scanTokens();   // get tokens from scanner
 
-        // print out tokens
-        for (Token token : tokens) {
-            System.out.println(token);
-        }
+        Parser parser = new Parser(tokens);
+        Expr expression = parser.parse();
+
+        // Stop if there was a syntax error.
+        if (hadError) return;
+
+        System.out.println(new AstPrinter().print(expression));
 
     }
 
     // let other systems report errors separately to the implementations of those systems
     static void error(int line, String message){
         report(line, "", message);
+    }
+
+    static void error(Token token, String message) {
+        if (token.type == TokenType.EOF) {
+            report(token.line, " at end", message);
+        } else {
+            report(token.line, " at '" + token.lexeme + "'", message);
+        }
     }
 
     private static void report(int line, String where, String message){
