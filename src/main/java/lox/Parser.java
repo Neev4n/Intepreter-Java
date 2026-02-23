@@ -22,14 +22,10 @@ public class Parser {
         } catch (ParseError error) {
             return null;
         }
-
     }
 
-
     private Expr expression(){
-
         return equality();
-
     }
 
     private Expr equality(){
@@ -45,7 +41,6 @@ public class Parser {
         }
 
         return expr;
-
     }
 
     private Expr comparison(){
@@ -61,7 +56,6 @@ public class Parser {
         }
 
         return expr;
-
     }
 
     private Expr term(){
@@ -77,7 +71,6 @@ public class Parser {
         }
 
         return expr;
-
     }
 
     private Expr factor() {
@@ -102,7 +95,6 @@ public class Parser {
         }
 
         return primary();
-
     }
 
     private Expr primary() {
@@ -139,22 +131,18 @@ public class Parser {
 
         if (check(type)) return advance();
         throw error(peek(), message);
-
-
     }
 
     private Token advance(){
 
         if (!isAtEnd()) current++;
         return previous();
-
     }
 
     private boolean check(TokenType type){
 
         if (isAtEnd()) return false;
         return peek().type == type;
-
     }
 
     private boolean isAtEnd(){
@@ -196,5 +184,4 @@ public class Parser {
             advance();
         }
     }
-
 }
