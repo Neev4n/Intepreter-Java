@@ -10,7 +10,9 @@ import java.util.List;
 
 public class Lox {
 
+    private static final Interpreter interpreter = new Interpreter();
     static boolean hadError = false;
+    static boolean hadRuntimeError = false;
 
     public static void main(String[] args) throws IOException {
 
@@ -35,6 +37,7 @@ public class Lox {
         byte[] bytes = Files.readAllBytes(Paths.get(path)); // read all bytes from path
         run(new String(bytes, Charset.defaultCharset()));   // create new string from bytes (convert bytes using default character set) then run
         if (hadError) System.exit(65);
+        if (hadRuntimeError) System.exit(70);
     }
 
     private static void runPrompt() throws IOException{
@@ -63,7 +66,7 @@ public class Lox {
         // Stop if there was a syntax error.
         if (hadError) return;
 
-        System.out.println(new AstPrinter().print(expression));
+        interpreter.interpret(expression);
 
     }
 
@@ -89,6 +92,13 @@ public class Lox {
 
         // If scanning had an error, exit 65 (even if you printed some tokens).
         if (hadError) System.exit(65);
+    }
+
+    // runtime errors act differently to normal errors (runtime errors do not crash the repl)
+    static void runtimeError(RuntimeError error) {
+        System.err.println(error.getMessage() +
+                "\n[line " + error.token.line + "]");
+        hadRuntimeError = true;
     }
 
     // let other systems report errors separately to the implementations of those systems
