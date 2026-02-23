@@ -7,8 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static lox.Lox.runParse;
-import static lox.Lox.runTokenize;
+import static lox.Lox.*;
 
 public class Main {
   public static void main(String[] args) throws IOException {
@@ -26,6 +25,7 @@ public class Main {
     switch (command) {
       case "tokenize" -> runTokenize(source);
       case "parse" -> runParse(source);
+      case "evaluate" -> runEvaluate(source);
       default -> {
         System.out.println("Unknown command: " + command);
         System.exit(1);
