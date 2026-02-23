@@ -90,6 +90,7 @@ public class Lox {
         Expr expression = parser.parse();
 
         if (hadError) System.exit(65);
+        if (hadRuntimeError) System.exit(70);
 
         interpreter.interpret(expression);
     }
