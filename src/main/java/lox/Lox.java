@@ -61,12 +61,12 @@ public class Lox {
         List<Token> tokens = scanner.scanTokens();   // get tokens from scanner
 
         Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
+        List<Stmt> statements = parser.parse();
 
         // Stop if there was a syntax error.
         if (hadError) return;
 
-        interpreter.interpret(expression);
+        interpreter.interpret(statements);
 
     }
 
@@ -75,11 +75,11 @@ public class Lox {
         List<Token> tokens = scanner.scanTokens();
 
         Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
+        List<Stmt> statements = parser.parse();
 
         if (hadError) System.exit(65);
 
-        System.out.println(new AstPrinter().print(expression));
+        //.out.println(new AstPrinter().print(expression));
     }
 
     public static void runEvaluate(String source) {
@@ -87,11 +87,11 @@ public class Lox {
         List<Token> tokens = scanner.scanTokens();
 
         Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
+        List<Stmt> statements = parser.parse();
 
         if (hadError) System.exit(65);
 
-        interpreter.interpret(expression);
+        interpreter.interpret(statements);
         if (hadRuntimeError) System.exit(70);
     }
 
